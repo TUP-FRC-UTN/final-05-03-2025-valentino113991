@@ -79,6 +79,9 @@
             @if(formReactivoSegundo.get('documento')?.hasError('required')) {
             <div class="text-danger align-self-end" style="width: 500px;">required</div>
             }
+            @if(formReactivoSegundo.get('documento')?.hasError('documentoReservado')) {
+                <div class="text-danger align-self-end" style="width: 500px;">docuemnto ya tiene reserva en ese servicio</div>
+                }
             }
         </div>
 

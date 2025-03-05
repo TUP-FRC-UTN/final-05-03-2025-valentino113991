@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { City, Passenger, Reserva, ServiceModel } from '../interfaces/interfaces';
 import { ApiService } from '../api.service';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-create-reserva',
@@ -29,13 +30,38 @@ export class CreateReservaComponent {
 
     this.formReactivoSegundo = new FormGroup({
       serviceId: new FormControl('', [Validators.required]),
-      documento: new FormControl('', [Validators.required]),
+      documento: new FormControl('', [Validators.required], [this.verificarDni()]),
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
       pasajeros: new FormArray([], [Validators.required])
     });
     
   }
+
+  verificarDni(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const documento = control.value;
+      const serviceId = this.formReactivoSegundo.get('serviceId')?.value; 
+
+ 
+      if (!documento || !serviceId) {
+        return of(null);
+      }
+
+
+      return this.service.getReservas().pipe(
+        map((reservas: Reserva[]) => {
+          const reservaExistente = reservas.some(
+            (reserva) => reserva.document === documento && reserva.service === serviceId
+          );
+          return reservaExistente ? { documentoReservado: true } : null; 
+        }),
+        catchError(() => of(null)) 
+      );
+    };
+  }
+
+
 
   pasajerosArray(): FormArray {
     return this.formReactivoSegundo.get("pasajeros") as FormArray;
