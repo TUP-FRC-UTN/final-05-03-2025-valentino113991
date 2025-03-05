@@ -13,16 +13,29 @@ import { ApiService } from '../api.service';
 })
 export class CreateReservaComponent {
   origenesSelect: City[] = [];
+  destinosSelect: City[] = [];
   private readonly service = inject(ApiService);
 
   ngOnInit(): void {
-    this.loadCities();
+    this.loadOrigenes();
+    this.loadDestinos();
   }
 
-  loadCities(){
+  loadOrigenes(){
     this.service.getCities().subscribe({
       next: (data: City[]) => {
         this.origenesSelect = data;
+      },
+      error: (err) => {
+        console.error('Error:', err);
+      }
+    });
+  }
+
+  loadDestinos(){
+    this.service.getCities().subscribe({
+      next: (data: City[]) => {
+        this.destinosSelect = data;
       },
       error: (err) => {
         console.error('Error:', err);

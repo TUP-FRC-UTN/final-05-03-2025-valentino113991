@@ -16,4 +16,8 @@ export class ApiService {
     return this.http.get<City[]>("https://679b8dc433d31684632448c9.mockapi.io/cities");
   }
 
+  getServices() : Observable<City[]>{
+    return this.http.get<City[]>("https://679b8dc433d31684632448c9.mockapi.io/cities");
+  }
+
 }
