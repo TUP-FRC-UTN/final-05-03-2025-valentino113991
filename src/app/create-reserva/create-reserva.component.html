@@ -1,0 +1,23 @@
+<h1 class="mt-4 mb-3 subtle-shadow d-flex align-items-center">
+    Create Booking
+</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>Origen</label>
+                <select class="form-select">
+                    @for (oP of origenesSelect; track $index) {
+                    <option [value]="oP.id">{{oP.city}}</option>
+                    }
+                </select>
+    </div>
+    <div class="col-md-6">
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        
+    </div>
+</div>
