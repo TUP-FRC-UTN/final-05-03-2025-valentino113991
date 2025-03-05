@@ -144,6 +144,9 @@
                 @if(p.get('firstName')?.hasError('required')) {
                 <div class="text-danger align-self-end" style="width: 500px;">required</div>
                 }
+                @if(p.get('firstName')?.hasError('minlength')) {
+                    <div class="text-danger align-self-end" style="width: 500px;">minimo 2 carac.</div>
+                    }
                 }
             </div>
 
@@ -154,6 +157,9 @@
                 @if(p.get('lastName')?.hasError('required')) {
                 <div class="text-danger align-self-end" style="width: 500px;">required</div>
                 }
+                @if(p.get('lastName')?.hasError('minlength')) {
+                    <div class="text-danger align-self-end" style="width: 500px;">minimo 2 carac.</div>
+                    }
                 }
             </div>
 

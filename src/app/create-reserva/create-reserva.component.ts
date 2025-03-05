@@ -69,9 +69,9 @@ export class CreateReservaComponent {
 
   addPasajero() {
     const p = new FormGroup({
-      document: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required])
+      document: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(2)])
     });
     this.pasajerosArray().push(p);
   }
