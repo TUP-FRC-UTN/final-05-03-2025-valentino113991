@@ -82,6 +82,9 @@
             @if(formReactivoSegundo.get('documento')?.hasError('documentoReservado')) {
                 <div class="text-danger align-self-end" style="width: 500px;">docuemnto ya tiene reserva en ese servicio</div>
                 }
+                @if(formReactivoSegundo.get('documento')?.hasError('minlength')) {
+                    <div class="text-danger align-self-end" style="width: 500px;">minimo 6 carac.</div>
+                    }
             }
         </div>
 
@@ -92,6 +95,9 @@
             @if(formReactivoSegundo.get('nombre')?.hasError('required')) {
             <div class="text-danger align-self-end" style="width: 500px;">required</div>
             }
+            @if(formReactivoSegundo.get('nombre')?.hasError('minlength')) {
+                <div class="text-danger align-self-end" style="width: 500px;">minimo 2 carac.</div>
+                }
             }
         </div>
 
@@ -105,6 +111,9 @@
             @if(formReactivoSegundo.get('apellido')?.hasError('required')) {
             <div class="text-danger align-self-end" style="width: 500px;">required</div>
             }
+            @if(formReactivoSegundo.get('apellido')?.hasError('minlength')) {
+                <div class="text-danger align-self-end" style="width: 500px;">minimo 2 carac.</div>
+                }
             }
         </div>
     </div>
@@ -123,6 +132,9 @@
                 @if(p.get('document')?.hasError('required')) {
                 <div class="text-danger align-self-end" style="width: 500px;">required</div>
                 }
+                @if(p.get('document')?.hasError('minlength')) {
+                    <div class="text-danger align-self-end" style="width: 500px;">minimo 2 carac.</div>
+                    }
                 }
             </div>
             <div class="col-md-2">

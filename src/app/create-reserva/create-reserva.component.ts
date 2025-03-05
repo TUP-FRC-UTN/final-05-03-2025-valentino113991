@@ -30,9 +30,9 @@ export class CreateReservaComponent {
 
     this.formReactivoSegundo = new FormGroup({
       serviceId: new FormControl('', [Validators.required]),
-      documento: new FormControl('', [Validators.required], [this.verificarDni()]),
-      nombre: new FormControl('', [Validators.required]),
-      apellido: new FormControl('', [Validators.required]),
+      documento: new FormControl('', [Validators.required, Validators.minLength(6)], [this.verificarDni()]),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      apellido: new FormControl('', [Validators.required, Validators.minLength(2)]),
       pasajeros: new FormArray([], [Validators.required])
     });
     
@@ -69,7 +69,7 @@ export class CreateReservaComponent {
 
   addPasajero() {
     const p = new FormGroup({
-      document: new FormControl('', [Validators.required]),
+      document: new FormControl('', [Validators.required, Validators.minLength(2)]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required])
     });
