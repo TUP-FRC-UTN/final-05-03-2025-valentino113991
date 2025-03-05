@@ -2,36 +2,157 @@
     Create Booking
 </h1>
 
-<div class="card p-3">
-    <div class="row">
+<form [formGroup]="formReactivoPrimero" (ngSubmit)="onSubmitFormPrimero()">
+    <div class="mb-1 row">
         <div class="col-md-6">
-            <label>Origen</label>
-                    <select class="form-select">
-                        @for (oP of origenesSelect; track $index) {
-                        <option [value]="oP.id">{{oP.city}}</option>
-                        }
-                    </select>
+            <label class="col-form-label custom-label">Origen</label>
+                <select  class="form-select" formControlName="campoOrigenId">
+                    @for (oS of origenesSelect; track $index) {
+                    <option [value]="oS.id">{{oS.city}}</option>
+                    }
+                </select>
+            @if(formReactivoPrimero.get('campoOrigenId')?.invalid && formReactivoPrimero.get('campoOrigenId')?.touched) {
+            @if(formReactivoPrimero.get('campoOrigenId')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
         </div>
+
         <div class="col-md-6">
-            <label>Destino</label>
-                    <select class="form-select">
-                        @for (oP of origenesSelect; track $index) {
-                        <option [value]="oP.id">{{oP.city}}</option>
-                        }
-                    </select>
+            <label class="col-form-label custom-label">Destino</label>
+                <select  class="form-select" formControlName="campoDestinoId">
+                    @for (dS of destinosSelect; track $index) {
+                    <option [value]="dS.id">{{dS.city}}</option>
+                    }
+                </select>
+            @if(formReactivoPrimero.get('campoDestinoId')?.invalid && formReactivoPrimero.get('campoDestinoId')?.touched) {
+            @if(formReactivoPrimero.get('campoDestinoId')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
         </div>
     </div>
-    
-    <div class="row mt-3">
+
+
+    <div class="mb-1 row">
         <div class="col-md-12">
-            <label>Fecha Ida</label>
-            <input type="date" id="fechaIda" class="form-control">
+            <label class="col-form-label custom-label">Fecha ida</label>
+            <input  type="date" class="form-control" formControlName="campoFechaIda">
+            @if(formReactivoPrimero.get('campoFechaIda')?.invalid && formReactivoPrimero.get('campoFechaIda')?.touched) {
+            @if(formReactivoPrimero.get('campoFechaIda')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
         </div>
     </div>
-    
-    <div class="row mt-3">
+
+    <div class="mb-3 mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="isFormInvalid">Buscar</button>
+    </div>
+
+</form>
+
+
+
+<form [formGroup]="formReactivoSegundo" (ngSubmit)="onSubmitFormSegundo()">
+    <div class="mb-1 row">
         <div class="col-md-12">
-            <button class="btn btn-primary" (click)="buscarServicioEspecifico()">Buscar</button>
+            <label class="col-form-label custom-label">Service</label>
+                <select  class="form-select" formControlName="serviceId">
+                    @for (sS of servicesFiltrados; track $index) {
+                    <option [value]="sS.id">{{sS.departureDate}} --- {{sS.arrivalDate}}</option>
+                    }
+                </select>
+            @if(formReactivoSegundo.get('serviceId')?.invalid && formReactivoSegundo.get('serviceId')?.touched) {
+            @if(formReactivoSegundo.get('serviceId')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
         </div>
     </div>
-</div>
+
+    <div class="mb-1 row">
+        <div class="col-md-6">
+            <label class="col-form-label custom-label">documento</label>
+            <input type="text" class="form-control" formControlName="documento">
+            @if(formReactivoSegundo.get('documento')?.invalid && formReactivoSegundo.get('documento')?.touched) {
+            @if(formReactivoSegundo.get('documento')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
+        </div>
+
+        <div class="col-md-6">
+            <label class="col-form-label custom-label">nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+            @if(formReactivoSegundo.get('nombre')?.invalid && formReactivoSegundo.get('nombre')?.touched) {
+            @if(formReactivoSegundo.get('nombre')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
+        </div>
+
+    </div>
+
+    <div class="mb-1 row">
+        <div class="col-md-12">
+            <label class="col-form-label custom-label">apellido</label>
+            <input type="text" class="form-control" formControlName="apellido">
+            @if(formReactivoSegundo.get('apellido')?.invalid && formReactivoSegundo.get('apellido')?.touched) {
+            @if(formReactivoSegundo.get('apellido')?.hasError('required')) {
+            <div class="text-danger align-self-end" style="width: 500px;">required</div>
+            }
+            }
+        </div>
+    </div>
+
+    <h4 class="mt-3 mb-3">
+        Pasajeros: <button class="btn btn-sm btn-success" type="button" (click)="addPasajero()">+</button>
+    </h4>
+
+    <div class="flex mb-3 mt-2" formArrayName="pasajeros">
+        @for (p of pasajerosArray().controls; track p; let i = $index) {
+        <div class="row mb-3" [formGroupName]="i">
+            <div class="col-md-4">
+                <label >document</label>
+                <input type="text" class="form-control" formControlName="document">
+                @if(p.get('document')?.invalid && p.get('document')?.touched) {
+                @if(p.get('document')?.hasError('required')) {
+                <div class="text-danger align-self-end" style="width: 500px;">required</div>
+                }
+                }
+            </div>
+            <div class="col-md-2">
+                <label >firstName</label>
+                <input type="text" class="form-control" formControlName="firstName">
+                @if(p.get('firstName')?.invalid && p.get('firstName')?.touched) {
+                @if(p.get('firstName')?.hasError('required')) {
+                <div class="text-danger align-self-end" style="width: 500px;">required</div>
+                }
+                }
+            </div>
+
+            <div class="col-md-2">
+                <label >lastName</label>
+                <input type="text" class="form-control" formControlName="lastName">
+                @if(p.get('lastName')?.invalid && p.get('lastName')?.touched) {
+                @if(p.get('lastName')?.hasError('required')) {
+                <div class="text-danger align-self-end" style="width: 500px;">required</div>
+                }
+                }
+            </div>
+
+            <div class="col-md-1">
+                <br>
+                <button type="button" (click)="removePasajero(i)" class="btn btn-danger">-</button>
+            </div>
+
+        </div>
+        }
+    </div>
+
+    <div class="mb-3 mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="isFormInvalid">Crear Reserva</button>
+    </div>
+
+</form>
